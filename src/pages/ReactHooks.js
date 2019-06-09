@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import { Link } from 'react-router-dom';
 
-import RootContext from './context/RootContext';
+import RootContext from '../context/RootContext';
+import reducer from '../fakeRedux/reducer';
 
-import reducer from './redux/index';
+import UseStateSimple from '../components/UseStateSimple';
+import UseState from '../components/UseState';
+import UseEffect from '../components/UseEffect';
+import DumbComponentA from '../components/DumbComponentA';
+import ContextConsumer from '../components/Consumer';
 
-import UseStateSimple from './components/UseStateSimple';
-import UseState from './components/UseState';
-import UseEffect from './components/UseEffect';
-import DumbComponentA from './components/DumbComponentA';
-import ContextConsumer from './components/Consumer';
-
-function App() {
+const ReactHooks = () => {
   const [ramdomValue, setRamdomValue] = useState(0);
   const [dumbList, setDumbList] = useState([]);
   const [todos, setTodos] = useState([]);
@@ -25,7 +25,9 @@ function App() {
       fetch('https://jsonplaceholder.typicode.com/todos')
           .then(response => response.json())
           .then(json => {
+            // Save to state
             setTodos(json.slice(0, 5));
+            // State to reducer store
             dispatch({ type: 'saveTodos', data: json });
           });
   });
@@ -47,6 +49,8 @@ function App() {
 
   return (
     <div className="App">
+    <Link to="/reduxReplacement">GO TO Redux Replacement</Link>
+
     <RootContext.Provider value={{ todos }}>
         <h2> Use State Examples</h2>
         <UseStateSimple />
@@ -66,4 +70,4 @@ function App() {
   );
 }
 
-export default App;
+export default ReactHooks;
